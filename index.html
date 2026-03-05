@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Question pour toi...</title>
+    <title>Question Spéciale ❤️</title>
     <style>
         body {
             display: flex;
@@ -13,17 +13,18 @@
             height: 100vh;
             margin: 0;
             background-color: #ffe6e6;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             touch-action: manipulation;
         }
-        h1 { color: #d63384; text-align: center; margin-bottom: 30px; }
+        h1 { color: #d63384; text-align: center; padding: 20px; transition: 0.5s; }
         .btn-container {
             display: flex;
             gap: 20px;
             position: relative;
-            width: 300px;
             justify-content: center;
+            align-items: center;
+            min-height: 100px;
         }
         button {
             padding: 15px 30px;
@@ -32,49 +33,61 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            width: 100px;
-            transition: 0.1s;
+            min-width: 100px;
+            transition: all 0.2s ease;
         }
-        .btn-yes { background-color: #ff4d6d; color: white; }
-        .btn-no { background-color: #888; color: white; }
+        .btn-yes { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
+        .btn-no { background-color: #888; color: white; opacity: 1; }
+        .hidden { opacity: 0; pointer-events: none; transform: scale(0); } /* Style pour effacer le bouton */
     </style>
 </head>
 <body>
 
-    <h1 id="question">Veux-tu sortir avec moi ?? ❤️</h1>
+    <h1 id="mainTitle">WILL YOU BE MY GIRLFRIEND ? ❤️</h1>
 
     <div class="btn-container">
-        <button id="btn1" class="btn-yes" onmouseenter="swap()" ontouchstart="swap()" onclick="check(this)">Oui</button>
-        <button id="btn2" class="btn-no" onmouseenter="swap()" ontouchstart="swap()" onclick="check(this)">Non</button>
+        <button id="btn1" class="btn-yes" onmouseenter="handleTouch()" ontouchstart="handleTouch()" onclick="checkSelection(this)">Oui</button>
+        <button id="btn2" class="btn-no" onmouseenter="handleTouch()" ontouchstart="handleTouch()" onclick="checkSelection(this)">Non</button>
     </div>
 
     <script>
-        let count = 0;
-        const maxRepetitions = 10;
+        let swapCount = 0;
+        const limit = 10; // Nombre d'échanges avant la disparition
 
-        function swap() {
-            if (count < maxRepetitions) {
-                const btn1 = document.getElementById('btn1');
-                const btn2 = document.getElementById('btn2');
+        function handleTouch() {
+            const b1 = document.getElementById('btn1');
+            const b2 = document.getElementById('btn2');
 
-                // On échange les textes
-                const tempText = btn1.innerText;
-                btn1.innerText = btn2.innerText;
-                btn2.innerText = tempText;
+            if (swapCount < limit) {
+                // Échange des textes
+                const tempText = b1.innerText;
+                b1.innerText = b2.innerText;
+                b2.innerText = tempText;
 
-                // On échange les couleurs (classes)
-                btn1.classList.toggle('btn-yes');
-                btn1.classList.toggle('btn-no');
-                btn2.classList.toggle('btn-yes');
-                btn2.classList.toggle('btn-no');
+                // Échange des styles visuels
+                b1.classList.toggle('btn-yes');
+                b1.classList.toggle('btn-no');
+                b2.classList.toggle('btn-yes');
+                b2.classList.toggle('btn-no');
 
-                count++;
+                swapCount++;
+            } 
+            
+            // Une fois qu'on a atteint la limite, on efface le bouton qui affiche "Non"
+            if (swapCount >= limit) {
+                if (b1.innerText === "Non") b1.classList.add('hidden');
+                if (b2.innerText === "Non") b2.classList.add('hidden');
+                document.getElementById('mainTitle').innerText = "Allez... clique sur OUI ! 😉";
             }
         }
 
-        function check(btn) {
+        function checkSelection(btn) {
             if (btn.innerText === "Oui") {
-                document.body.innerHTML = "<h1>Je savais que tu finirais par dire OUI ! 😍❤️</h1>";
+                document.body.innerHTML = `
+                    <div style="text-align:center; animation: fadeIn 1s;">
+                        <h1 style="color:#d63384; font-size: 2.5rem;">SAFIDY TSARA BE MIHITSY IZANY ! 😍🌹</h1>
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/T86clvgryfS5G/giphy.gif" width="200" style="border-radius:20px;">
+                    </div>`;
             }
         }
     </script>
