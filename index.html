@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Une petite question...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Projet Spécial ❤️</title>
     <style>
         body {
             display: flex;
@@ -12,55 +12,61 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe6e6; /* Rose pâle comme dans la vidéo */
-            font-family: 'Arial', sans-serif;
-            overflow: hidden; /* Empêche de scroller pour tricher */
+            background-color: #ffe6e6; /* Rose comme dans la vidéo */
+            font-family: sans-serif;
+            overflow: hidden; /* Empêche le scroll */
+            touch-action: none; /* Désactive les gestes Android par défaut */
         }
-        h1 { color: #d63384; text-align: center; font-size: 24px; padding: 0 20px; }
-        .container { position: relative; width: 100%; height: 200px; display: flex; justify-content: center; align-items: center; }
+        h1 { color: #d63384; text-align: center; padding: 20px; z-index: 1; }
+        .container { position: relative; width: 100%; height: 100px; }
         button {
             padding: 15px 30px;
             font-size: 18px;
             font-weight: bold;
-            cursor: pointer;
             border: none;
             border-radius: 50px;
-            transition: 0.1s;
             position: absolute;
-            touch-action: none; /* Important pour Android */
+            transition: 0.1s ease;
+            touch-action: none;
         }
-        #yesBtn { background-color: #ff4d6d; color: white; transform: translateX(-70px); }
-        #noBtn { background-color: #888; color: white; transform: translateX(70px); z-index: 10; }
-        img { border-radius: 15px; margin-bottom: 20px; max-width: 80%; }
+        #yesBtn { background-color: #ff4d6d; color: white; left: 50%; transform: translateX(-120%); }
+        #noBtn { background-color: #888; color: white; left: 50%; transform: translateX(20%); z-index: 10; }
+        img { border-radius: 15px; margin-bottom: 20px; max-width: 180px; }
     </style>
 </head>
 <body>
 
-    <h1>Will you be my girlfriend, Ronny? ❤️</h1>
-    
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/l41lTf6fS8sH2Z8pW/giphy.gif" width="200">
+    <h1>WILL YOU BE MY GIRLFRIEND, Ronny Ralinjato ? ❤️</h1>
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/l41lTf6fS8sH2Z8pW/giphy.gif">
 
     <div class="container">
-        <button id="yesBtn" onclick="celebrate()">Yes</button>
-        <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">No</button>
+        <button id="yesBtn" onclick="celebrate()">Oui</button>
+        <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">Non</button>
     </div>
 
     <script>
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            // Calcule une position aléatoire sur l'écran
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-            noBtn.style.transform = 'none'; // Enlève le centrage du début
+            // On définit une marge de 20px pour ne pas coller aux bords
+            const margin = 20; 
+            
+            // Largeur et hauteur disponibles dans la fenêtre (viewport)
+            const maxX = window.innerWidth - noBtn.offsetWidth - margin;
+            const maxY = window.innerHeight - noBtn.offsetHeight - margin;
+            
+            // Génère une position aléatoire strictement DANS la vue
+            const randomX = Math.max(margin, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(margin, Math.floor(Math.random() * maxY));
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transform = 'none'; // Annule le centrage initial
         }
 
         function celebrate() {
-            // Le message de réussite quand elle clique sur Oui
-            alert("Je savais que tu dirais oui ! 😍");
-            document.body.innerHTML = "<h1>C'est promis ! 🌹❤️</h1><img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/3oz8xAFtqoNEAf6SxW/giphy.gif' width='250'>";
+            alert("Efa fantatro hoe OUI ny valiny ! 🤣😍");
+            document.body.innerHTML = "<h1 style='color:#d63384'>JE T'AIME ! ❤️🌹</h1><img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/3oz8xAFtqoNEAf6SxW/giphy.gif' width='250'>";
         }
     </script>
 </body>
