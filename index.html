@@ -3,92 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Question Spéciale ❤️</title>
+    <title>Une surprise pour toi</title>
     <style>
+        :root { --pink: #ff4d6d; --dark-pink: #d63384; --bg: #fff0f3; }
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ffe6e6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
-            touch-action: manipulation;
+            touch-action: none;
         }
-        h1 { color: #d63384; text-align: center; padding: 20px; transition: 0.5s; }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+            z-index: 2;
+        }
+        h1 { color: var(--dark-pink); font-size: 1.5rem; margin-bottom: 20px; }
         .btn-container {
             display: flex;
-            gap: 20px;
-            position: relative;
             justify-content: center;
-            align-items: center;
-            min-height: 100px;
+            gap: 20px;
+            margin-top: 20px;
+            height: 60px;
         }
         button {
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 12px 25px;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
-            border-radius: 50px;
+            border-radius: 12px;
             cursor: pointer;
-            min-width: 100px;
-            transition: all 0.2s ease;
+            transition: transform 0.1s;
         }
-        .btn-yes { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
-        .btn-no { background-color: #888; color: white; opacity: 1; }
-        .hidden { opacity: 0; pointer-events: none; transform: scale(0); } /* Style pour effacer le bouton */
+        #yesBtn { background-color: var(--pink); color: white; }
+        #noBtn { 
+            background-color: #dee2e6; 
+            color: #495057; 
+            position: fixed; /* Sort du flux pour bouger partout */
+            z-index: 1000;
+        }
+        img { width: 150px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <h1 id="mainTitle">WILL YOU BE MY GIRLFRIEND ? ❤️</h1>
-
-    <div class="btn-container">
-        <button id="btn1" class="btn-yes" onmouseenter="handleTouch()" ontouchstart="handleTouch()" onclick="checkSelection(this)">Oui</button>
-        <button id="btn2" class="btn-no" onmouseenter="handleTouch()" ontouchstart="handleTouch()" onclick="checkSelection(this)">Non</button>
+    <div class="card">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/T86clvgryfS5G/giphy.gif" alt="Cute bear">
+        <h1>VODY AHO? ✨</h1>
+        <div class="btn-container">
+            <button id="yesBtn" onclick="success()">OUI !</button>
+            <button id="noBtn" onmouseover="escape()" ontouchstart="escape()">NON</button>
+        </div>
     </div>
 
     <script>
-        let swapCount = 0;
-        const limit = 10; // Nombre d'échanges avant la disparition
-
-        function handleTouch() {
-            const b1 = document.getElementById('btn1');
-            const b2 = document.getElementById('btn2');
-
-            if (swapCount < limit) {
-                // Échange des textes
-                const tempText = b1.innerText;
-                b1.innerText = b2.innerText;
-                b2.innerText = tempText;
-
-                // Échange des styles visuels
-                b1.classList.toggle('btn-yes');
-                b1.classList.toggle('btn-no');
-                b2.classList.toggle('btn-yes');
-                b2.classList.toggle('btn-no');
-
-                swapCount++;
-            } 
+        function escape() {
+            const btn = document.getElementById('noBtn');
+            const margin = 50;
             
-            // Une fois qu'on a atteint la limite, on efface le bouton qui affiche "Non"
-            if (swapCount >= limit) {
-                if (b1.innerText === "Non") b1.classList.add('hidden');
-                if (b2.innerText === "Non") b2.classList.add('hidden');
-                document.getElementById('mainTitle').innerText = "Allez... clique sur OUI ! 😉";
-            }
+            // Calcul pour que le bouton ne sorte jamais de l'écran
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - margin * 2) + margin;
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - margin * 2) + margin;
+            
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
-        function checkSelection(btn) {
-            if (btn.innerText === "Oui") {
-                document.body.innerHTML = `
-                    <div style="text-align:center; animation: fadeIn 1s;">
-                        <h1 style="color:#d63384; font-size: 2.5rem;">SAFIDY TSARA BE MIHITSY IZANY ! 😍🌹</h1>
-                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/T86clvgryfS5G/giphy.gif" width="200" style="border-radius:20px;">
-                    </div>`;
-            }
+        function success() {
+            // Remplace tout le contenu par le message final
+            document.body.innerHTML = `
+                <div style="text-align:center;">
+                    <h1 style="font-size:3rem;"🤣EFA FANTATRO 🤣</h1>
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8dy8dy8dy/KztT2c4u8mYYUiMKdJ/giphy.gif" width="300">
+                </div>
+            `;
         }
     </script>
 </body>
